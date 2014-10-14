@@ -3,7 +3,7 @@
 
 void main( void )
 {
-    char *str = "Welcome to FemtoOS";
+    char *str = "Welcome to FemtoOs";
 //	clear();
 	showstring(str);
 
