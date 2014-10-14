@@ -1,4 +1,4 @@
-FemtoOS
+femtoOS
 ==========
 
 A simple bootloader and kernel that boots to i386 protected mode.
