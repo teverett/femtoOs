@@ -1,4 +1,5 @@
 
+Code from the below web sites was used in the creation of femtoOS
 
 * Bootloader code is from [here](https://code.google.com/p/kryos-dev/wiki/FirstStep)
 * Additions to Bootloader to output console messages are from [here](https://github.com/jackrusher/toy-bootloader)
