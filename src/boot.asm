@@ -24,7 +24,7 @@ _start:
         
 drive   db 0                      ; Used to store boot device
 
-welcome         db "FemtoOS",13,10,0        
+welcome         db "FemtoOs",13,10,0        
 
 ;----------Bootsector Code----------;
   
