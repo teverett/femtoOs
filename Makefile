@@ -16,8 +16,9 @@ kernel.bin: kernel.elf
 	$(OBJCOPY) -R .note -R .comment -S -O binary kernel.elf kernel.bin
 boot.bin: $(SRC)/boot.asm
 	$(NASM) -f bin $(SRC)/boot.asm -o boot.bin
-kernel.elf: loader.o $(SRC)/main.c $(SRC)/video.c
+kernel.elf: loader.o $(SRC)/main.c $(SRC)/video.c $(SRC)/isr_wrapper.asm
 	$(CC) $(CCARGS) -c $(SRC)/*.c
-	$(LD) $(LDARGS) -o kernel.elf loader.o main.o video.o
+	$(NASM) -f elf $(SRC)/isr_wrapper.asm -o isr_wrapper.o
+	$(LD) $(LDARGS) -o kernel.elf loader.o main.o video.o isr_wrapper.o interrupt_handler.o
 clean:
 	rm *.elf *.bin *.o *.img
