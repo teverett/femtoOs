@@ -1,11 +1,11 @@
 
-#include "video.h"
+#include "monitor/monitor.h"
 
 void main( void )
 {
-    char *str = "Welcome to FemtoOs";
+    char *str = "Hello from FemtoOs";
 //	clear();
-	showstring(str);
+	monitor_write(str);
 
   for(;;); /* Keep the OS running */
 }
