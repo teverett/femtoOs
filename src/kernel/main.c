@@ -1,5 +1,6 @@
 
 #include "monitor/monitor.h"
+#include "kernel.h"
 
 void main( void )
 {
