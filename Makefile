@@ -5,3 +5,5 @@ src/floppy.img:
 	cp src/floppy.img .	
 clean:
 	make -C src clean
+	rm -rf floppy.img
+
