@@ -8,4 +8,5 @@ boot/boot.bin:
 	make -C boot
 clean:
 	rm *.img
-
+	make -C kernel clean
+	make -C boot clean
