@@ -10,3 +10,4 @@ clean:
 	make -C kernel clean
 	make -C boot clean
 	rm -rf *.img
+

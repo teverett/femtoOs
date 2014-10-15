@@ -21,5 +21,3 @@ clean:
 	rm -rf kernel.elf
 	rm -rf kernel.bin
 
-
-
