@@ -15,4 +15,3 @@ kernel.elf: main.c monitor/monitor.c interrupt/isr_wrapper.asm io.c string.c mem
 	$(LD) $(LDARGS) -o kernel.elf loader.o main.o isr_wrapper.o interrupt_handler.o string.o mem.o monitor.o io.o
 clean:
 	rm *.elf *.bin *.o
-

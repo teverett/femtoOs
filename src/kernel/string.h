@@ -3,8 +3,9 @@
 
 #include "types.h"
 
-int kstrcmp(char *str1, char *str2);
-char* kstrcpy(char *dest, const char *src);
-char* kstrcat(char *dest, const char *src);
+s8int kstrcmp(s8int *str1, s8int *str2);
+s8int* kstrcpy(s8int *dest, const s8int *src);
+s8int* kstrcat(s8int *dest, const s8int *src);
+u32int kstrlen(s8int* str);
 
 #endif
