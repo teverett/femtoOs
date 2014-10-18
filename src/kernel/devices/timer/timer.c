@@ -2,9 +2,9 @@
 //            Written for JamesM's kernel development tutorials.
 
 #include "timer.h"
-#include "isr.h"
-#include "monitor/monitor.h"
-#include "io.h"
+#include "../../isr.h"
+#include "../../monitor/monitor.h"
+#include "../../io.h"
 
 u32int tick = 0;
 
@@ -12,9 +12,9 @@ static void timer_callback(registers_t *regs)
 {
     tick++;
   //  switch_task();
-   monitor_write("Tick: ");
-   monitor_write_dec(tick);
-   monitor_write("\n");
+//   monitor_write("Tick: ");
+//   monitor_write_dec(tick);
+//   monitor_write("\n");
 }
 
 void init_timer(u32int frequency)

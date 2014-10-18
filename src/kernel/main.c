@@ -3,12 +3,13 @@
 #include "kernel.h"
 #include "gdt.h"
 #include "idt.h"
-#include "timer.h"
+#include "devices/timer/timer.h"
 
 void init ( void );
 
 void main( void )
 {
+	monitor_write( "Starting FemtoOs\n");
 	init();
 
 	for(;;); /* Keep the OS running */
@@ -16,7 +17,6 @@ void main( void )
 
 void init( void )
 {
-	monitor_write( "FemtoOs Init Started\n");
 	monitor_write("Init GDT\n");
 	init_gdt();
 	monitor_write("Init IDT\n");
