@@ -3,15 +3,13 @@
 #include "kernel.h"
 #include "gdt.h"
 #include "idt.h"
+#include "timer.h"
 
 void init ( void );
 
 void main( void )
 {
 	init();
-
-	asm volatile ("int $0x3");
-	asm volatile ("int $0x4");
 
 	for(;;); /* Keep the OS running */
 }
@@ -23,6 +21,9 @@ void init( void )
 	init_gdt();
 	monitor_write("Init IDT\n");
 	init_idt();
+	monitor_write("Init Timer\n");
+	asm volatile("sti");
+	init_timer(50);
 	monitor_write("Init Completed\n");	
 }
 

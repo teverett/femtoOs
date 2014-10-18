@@ -66,7 +66,7 @@ read_disk:
         mov bx, 0x1000          ; Destination address = 0000:1000
 
         mov ah, 02h             ; READ SECTOR-command
-        mov al, 12h             ; Number of sectors to read (0x12 = 18 sectors)
+        mov al, 40h             ; Number of sectors to read (0x40 = 64 sectors = 32k)
         mov dl, [drive]         ; Load boot disk
         mov ch, 0               ; Cylinder = 0
         mov cl, 2               ; Starting Sector = 3

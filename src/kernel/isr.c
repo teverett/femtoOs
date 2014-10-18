@@ -12,6 +12,10 @@ isr_t interrupt_handlers[256];
 
 void register_interrupt_handler(u8int n, isr_t handler)
 {
+    monitor_write("Registered interupt handler: ");
+    monitor_write_hex(n);
+    monitor_write("\n");
+
     interrupt_handlers[n] = handler;
 }
 
@@ -22,6 +26,12 @@ void isr_handler(registers_t regs)
     // to a 32bit value, it sign-extends, not zero extends. So if the most significant
     // bit (0x80) is set, regs.int_no will be very large (about 0xffffff80).
     u8int int_no = regs.int_no & 0xFF;
+
+
+    monitor_write("Received isr: ");
+    monitor_write_hex(int_no);
+    monitor_write("\n");
+
     if (interrupt_handlers[int_no] != 0)
     {
         isr_t handler = interrupt_handlers[int_no];
