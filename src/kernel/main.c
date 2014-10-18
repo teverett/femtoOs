@@ -4,6 +4,7 @@
 #include "gdt.h"
 #include "idt.h"
 #include "devices/timer/timer.h"
+#include "devices/keyboard/keyboard.h"
 
 void init ( void );
 
@@ -23,7 +24,9 @@ void init( void )
 	init_idt();
 	monitor_write("Init Timer\n");
 	asm volatile("sti");
-	init_timer(50);
+//	init_timer(50);
+	monitor_write("Init Keyboard\n");
+	init_keyboard();
 	monitor_write("Init Completed\n");	
 }
 

@@ -27,7 +27,6 @@ void isr_handler(registers_t regs)
     // bit (0x80) is set, regs.int_no will be very large (about 0xffffff80).
     u8int int_no = regs.int_no & 0xFF;
 
-
     monitor_write("Received isr: ");
     monitor_write_hex(int_no);
     monitor_write("\n");
@@ -49,6 +48,10 @@ void isr_handler(registers_t regs)
 // This gets called from our ASM interrupt handler stub.
 void irq_handler(registers_t regs)
 {
+//    monitor_write("Received irq: ");
+//    monitor_write_hex(regs.int_no);
+//    monitor_write("\n");
+
     // Send an EOI (end of interrupt) signal to the PICs.
     // If this interrupt involved the slave.
     if (regs.int_no >= 40)
@@ -64,5 +67,4 @@ void irq_handler(registers_t regs)
         isr_t handler = interrupt_handlers[regs.int_no];
         handler(&regs);
     }
-
 }
