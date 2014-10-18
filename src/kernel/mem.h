@@ -3,7 +3,7 @@
 
 #include "types.h"
 
-u8int* kmemcpy(u8int *dest, const u8int *src, u32int len);
-u8int* kmemset(u8int *dest, u8int val, u32int len);
+u8int* memcpy(u8int *dest, const u8int *src, u32int len);
+u8int* memset(u8int *dest, u8int val, u32int len);
 
 #endif
