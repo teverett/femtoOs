@@ -5,6 +5,7 @@
 #include "idt.h"
 #include "devices/timer/timer.h"
 #include "devices/keyboard/keyboard.h"
+#include "devices/rtc/rtc.h"
 
 void init ( void );
 
@@ -27,6 +28,9 @@ void init( void )
 //	init_timer(50);
 	monitor_write("Init Keyboard\n");
 	init_keyboard();
+	monitor_write("Init RTC\n");
+	init_rtc();
+
 	monitor_write("Init Completed\n");	
 }
 
