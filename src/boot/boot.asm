@@ -1,8 +1,5 @@
-; Fat12 Bootloader
 
-[BITS 16]                       ; We need 16-bit intructions for Real mode
-
-[ORG 0x7C00]                    ; The BIOS loads the boot sector into memory location 0x7C00
+[BITS 16]
 
 _start:
         jmp     word load_kernel; Load the OS Kernel
