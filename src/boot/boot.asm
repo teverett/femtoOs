@@ -7,11 +7,11 @@
 _start:
         jmp     word load_kernel; Load the OS Kernel
         
-drive   db 0                    ; Used to store boot device
-readcnt db 0                    ; Used to store bytes read
+drive           db 0            ; Used to store boot device
+readcnt         db 0            ; Used to store bytes read
 
 welcome         db "FemtoOs",13,10,0        
-readbytes       db " bytes read",13,10,0
+readsectors     db " Sectors read",13,10,0
 ;----------Bootsector Code----------;
   
 load_kernel:
@@ -22,23 +22,16 @@ load_kernel:
         mov     si, welcome     ; load the welcome message
         call    puts            ; call our puts function
 
- ;       call diskinfo                ; get disk info
-
         call    read_disk       ; Load the OS into memory
         cli                     ; Disable interrupts, we want to be alone
-        mov     ax, [readcnt]   ; get the read count
+        mov     al, [readcnt]   ; get the read count
+        mov     ah, 0
         call    printNum        ; print it
-        mov     si, readbytes
+        mov     si, readsectors
         call    puts
        
         jmp     enter_pm        ; enter protected mode
         hlt
-
-diskinfo:
-        mov     ah, 08h         ; Read Drive Parameters
-        mov     dl, [drive]     ; First Drive
-        int     13h
-        ret
 
 clear:                          ; clear the screen via an interrupt
         mov     al, 02h         ; al = 02h, code for video mode (80x25)
