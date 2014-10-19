@@ -6,26 +6,12 @@
 
 _start:
         jmp word load_kernel    ; Load the OS Kernel
-
-;----------Fat 12 Header junk----------;
-
-        db "ONYXDISK"           ; OEM Label String
-        dw 512                  ; Bytes per sector
-        db 1                    ; Sectors per FAT cluster
-        dw 36                   ; Resered sector count
-        db 2                    ; number of FATs
-        dw 224                  ; Root dir entries
-        dw 2880                 ; Total Sectors
-        db 240                  ; Double sided, 18 sectors per track
-        dw 9                    ; Sectors per FAT
-        dw 18                   ; Sectors per track
-        dw 2                    ; Head count (double sided)
-        dd 0                    ; Hidden sector count 
         
-drive   db 0                      ; Used to store boot device
+drive   db 0                    ; Used to store boot device
+readcnt db 0                    ; Used to store bytes read
 
 welcome         db "FemtoOs",13,10,0        
-
+readbytes       db " bytes read",13,10,0
 ;----------Bootsector Code----------;
   
 load_kernel:
@@ -34,7 +20,15 @@ load_kernel:
         mov si, welcome         ; load the welcome message
         call puts               ; call our puts function
 
-        jmp read_disk           ; Load the OS into memory
+        call read_disk          ; Load the OS into memory
+        cli                     ; Disable interrupts, we want to be alone
+        mov ax, [readcnt]       ; get the read count
+        call printNum           ; print it
+        mov si, readbytes
+        call puts
+       
+        jmp enter_pm            ; enter protected mode
+      
         hlt
 
 clear:                          ; clear the screen via an interrupt
@@ -52,6 +46,30 @@ puts:                           ; print a line of text to the screen via an inte
         int 10h                 ; triggers an interrupt to push out the byte
         jmp .repeat             ; jump back to the repeat, this is how we loop
 .done:
+        ret
+
+printNum:                       ;Print a number (ax)
+        push cx
+        push dx
+        mov cx,000Ah            ;divide by 10
+        mov bx, sp
+getDigit:
+        mov dx,0                ;puting 0 in the high part of the divided number (DX:AX)
+        div cx                  ;DX:AX/cx.  ax=dx:ax/cx  and dx=dx:ax%cx(modulus)
+        push dx
+        cmp ax,0
+        jne getDigit
+ 
+printNmb:
+        pop ax
+        add al, 30h             ;adding the '0' char for printing
+        mov ah,0eh              ;print char interrupt
+        int 10h
+        cmp bx, sp
+        jne printNmb
+ 
+        pop dx
+        pop cx
         ret
 
 read_disk:
@@ -74,7 +92,8 @@ read_disk:
         int 13h                 ; Call interrupt 13h
         or ah, ah               ; Check for error code
         jnz load_kernel         ; Try again if ah != 0
-        cli                     ; Disable interrupts, we want to be alone
+        mov [readcnt],al        ; save read count
+        ret
 
 enter_pm:
         xor ax, ax              ; Clear AX register

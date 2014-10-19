@@ -135,7 +135,7 @@ void monitor_clear()
 }
 
 // Outputs a null-terminated ASCII string to the monitor.
-void monitor_write(char *c)
+void monitor_write(const char *c)
 {
     int i = 0;
     while (c[i])
@@ -213,5 +213,12 @@ void monitor_write_dec(u32int n)
         c2[i--] = c[j++];
     }
     monitor_write(c2);
+}
 
+void init_monitor()
+{
+    cursor_y =10;
+  //  outb(0x3D4, 15); 
+  //  u16int loc = inw(0x3D5);
+  //  monitor_write_hex(loc);
 }

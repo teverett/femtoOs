@@ -11,6 +11,7 @@ void init ( void );
 
 void main( void )
 {
+	init_monitor();
 	monitor_write( "Starting FemtoOs\n");
 	init();
 
