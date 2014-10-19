@@ -2,13 +2,39 @@
 [BITS 16]
 
 _start:
-        jmp     word load_kernel; Load the OS Kernel
-        
+        jmp     word load_kernel
+
+;----------BIOS Parameter Block----------;
+
+TIMES 0Bh-$+_start      DB 0
+ 
+bpbBytesPerSector:      DW 512
+bpbSectorsPerCluster:   DB 1
+bpbReservedSectors:     DW 1
+bpbNumberOfFATs:        DB 2
+bpbRootEntries:         DW 224
+bpbTotalSectors:        DW 2880
+bpbMedia:               DB 0xF0
+bpbSectorsPerFAT:       DW 9
+bpbSectorsPerTrack:     DW 18
+bpbHeadsPerCylinder:    DW 2
+bpbHiddenSectors:       DD 0
+bpbTotalSectorsBig:     DD 0
+bsDriveNumber:          DB 0
+bsUnused:               DB 0
+bsExtBootSignature:     DB 0x29
+bsSerialNumber:         DD 0xa0a1a2a3  
+bsVolumeLabel:          DB "FemtoOS    "
+bsFileSystem:           DB "FAT12   "
+
+;----------Private Data----------;
+
 drive           db 0            ; Used to store boot device
 readcnt         db 0            ; Used to store bytes read
 
 welcome         db "FemtoOs",13,10,0        
 readsectors     db " sectors read",13,10,0
+
 ;----------Bootsector Code----------;
   
 load_kernel:

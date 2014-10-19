@@ -4,8 +4,8 @@ read_disk:
         int     13h             ; Call interrupt 13h
         or      ah, ah          ; Check for error code
         jnz     read_disk       ; Try again if ah != 0
+
         mov     ax, 0
-        mov     ax, 0                               
         mov     es, ax                              
         mov     bx, 0x1000      ; Destination address = 0000:1000
 
@@ -20,3 +20,4 @@ read_disk:
         jnz     load_kernel     ; Try again if ah != 0
         mov     [readcnt],al    ; save read count
         ret
+
