@@ -1,5 +1,5 @@
 
-#include "monitor/monitor.h"
+#include "devices/monitor/monitor.h"
 #include "kernel.h"
 #include "gdt.h"
 #include "idt.h"

@@ -3,7 +3,7 @@
 
 #include "rtc.h"
 #include "../../isr.h"
-#include "../../monitor/monitor.h"
+#include "../monitor/monitor.h"
 #include "../../io.h"
 
 static void rtc_callback(registers_t *regs)

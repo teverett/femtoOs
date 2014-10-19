@@ -1,7 +1,7 @@
 
 #include "keyboard.h"	
 #include "../../isr.h"
-#include "../../monitor/monitor.h"
+#include "../monitor/monitor.h"
 #include "../../io.h"
 
 const u8int OUTPUT_BUFFER=0x60;
