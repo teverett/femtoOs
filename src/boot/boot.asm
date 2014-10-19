@@ -5,7 +5,7 @@
 [ORG 0x7C00]                    ; The BIOS loads the boot sector into memory location 0x7C00
 
 _start:
-        jmp word load_kernel    ; Load the OS Kernel
+        jmp     word load_kernel; Load the OS Kernel
         
 drive   db 0                    ; Used to store boot device
 readcnt db 0                    ; Used to store bytes read
@@ -15,21 +15,30 @@ readbytes       db " bytes read",13,10,0
 ;----------Bootsector Code----------;
   
 load_kernel:
-        call clear              ; our routine to clear the screen
+        mov     [drive], dl     ; Store boot disk
+        
+        call    clear           ; our routine to clear the screen
 
-        mov si, welcome         ; load the welcome message
-        call puts               ; call our puts function
+        mov     si, welcome     ; load the welcome message
+        call    puts            ; call our puts function
 
-        call read_disk          ; Load the OS into memory
+ ;       call diskinfo                ; get disk info
+
+        call    read_disk       ; Load the OS into memory
         cli                     ; Disable interrupts, we want to be alone
-        mov ax, [readcnt]       ; get the read count
-        call printNum           ; print it
-        mov si, readbytes
-        call puts
+        mov     ax, [readcnt]   ; get the read count
+        call    printNum        ; print it
+        mov     si, readbytes
+        call    puts
        
-        jmp enter_pm            ; enter protected mode
-      
+        jmp     enter_pm        ; enter protected mode
         hlt
+
+diskinfo:
+        mov     ah, 08h         ; Read Drive Parameters
+        mov     dl, [drive]     ; First Drive
+        int     13h
+        ret
 
 clear:                          ; clear the screen via an interrupt
         mov     al, 02h         ; al = 02h, code for video mode (80x25)
@@ -38,85 +47,84 @@ clear:                          ; clear the screen via an interrupt
         ret
                                
 puts:                           ; print a line of text to the screen via an interrupt
-        mov ah, 0Eh             ; set interrupt function => print to screen
+        mov     ah, 0Eh         ; set interrupt function => print to screen
 .repeat:
         lodsb                   ; loads the next character into al
-        cmp al, 0               ; compare al to 0 (nul terminator check)
-        je .done                ; "jump equal" to .done label
-        int 10h                 ; triggers an interrupt to push out the byte
-        jmp .repeat             ; jump back to the repeat, this is how we loop
+        cmp     al, 0           ; compare al to 0 (nul terminator check)
+        je      .done           ; "jump equal" to .done label
+        int     10h             ; triggers an interrupt to push out the byte
+        jmp     .repeat         ; jump back to the repeat, this is how we loop
 .done:
         ret
 
 printNum:                       ;Print a number (ax)
-        push cx
-        push dx
-        mov cx,000Ah            ;divide by 10
-        mov bx, sp
+        push    cx
+        push    dx
+        mov     cx,000Ah        ;divide by 10
+        mov     bx, sp
 getDigit:
-        mov dx,0                ;puting 0 in the high part of the divided number (DX:AX)
-        div cx                  ;DX:AX/cx.  ax=dx:ax/cx  and dx=dx:ax%cx(modulus)
-        push dx
-        cmp ax,0
-        jne getDigit
+        mov     dx,0            ;puting 0 in the high part of the divided number (DX:AX)
+        div     cx              ;DX:AX/cx.  ax=dx:ax/cx  and dx=dx:ax%cx(modulus)
+        push    dx
+        cmp     ax,0
+        jne     getDigit
  
 printNmb:
-        pop ax
-        add al, 30h             ;adding the '0' char for printing
-        mov ah,0eh              ;print char interrupt
-        int 10h
-        cmp bx, sp
-        jne printNmb
+        pop     ax
+        add     al, 30h         ;adding the '0' char for printing
+        mov     ah,0eh          ;print char interrupt
+        int     10h
+        cmp     bx, sp
+        jne     printNmb
  
-        pop dx
-        pop cx
+        pop     dx
+        pop     cx
         ret
 
 read_disk:
-        mov ah, 0               ; RESET-command
-        int 13h                 ; Call interrupt 13h
-        mov [drive], dl         ; Store boot disk
-        or ah, ah               ; Check for error code
-        jnz read_disk           ; Try again if ah != 0
-        mov ax, 0
-        mov ax, 0                               
-        mov es, ax                              
-        mov bx, 0x1000          ; Destination address = 0000:1000
+        mov     ah, 0           ; RESET-command
+        int     13h             ; Call interrupt 13h
+        or      ah, ah          ; Check for error code
+        jnz     read_disk       ; Try again if ah != 0
+        mov     ax, 0
+        mov     ax, 0                               
+        mov     es, ax                              
+        mov     bx, 0x1000      ; Destination address = 0000:1000
 
-        mov ah, 02h             ; READ SECTOR-command
-        mov al, 40h             ; Number of sectors to read (0x40 = 64 sectors = 32k)
-        mov dl, [drive]         ; Load boot disk
-        mov ch, 0               ; Cylinder = 0
-        mov cl, 2               ; Starting Sector = 3
-        mov dh, 0               ; Head = 1
-        int 13h                 ; Call interrupt 13h
-        or ah, ah               ; Check for error code
-        jnz load_kernel         ; Try again if ah != 0
-        mov [readcnt],al        ; save read count
+        mov     ah, 02h         ; READ SECTOR-command
+        mov     al, 40h         ; Number of sectors to read (0x40 = 64 sectors = 32k)
+        mov     dl, [drive]     ; Load boot disk
+        mov     ch, 0           ; Cylinder = 0
+        mov     cl, 2           ; Starting Sector = 3
+        mov     dh, 0           ; Head = 1
+        int     13h             ; Call interrupt 13h
+        or      ah, ah          ; Check for error code
+        jnz     load_kernel     ; Try again if ah != 0
+        mov     [readcnt],al    ; save read count
         ret
 
 enter_pm:
-        xor ax, ax              ; Clear AX register
-        mov ds, ax              ; Set DS-register to 0 - used by lgdt
+        xor     ax, ax          ; Clear AX register
+        mov     ds, ax          ; Set DS-register to 0 - used by lgdt
 
-        lgdt [gdt_desc]         ; Load the GDT descriptor 
+        lgdt    [gdt_desc]      ; Load the GDT descriptor 
         
 ;----------Entering Protected Mode----------;
                 
-        mov eax, cr0            ; Copy the contents of CR0 into EAX
-        or eax, 1               ; Set bit 0     (0xFE = Real Mode)
-        mov cr0, eax            ; Copy the contents of EAX into CR0
+        mov     eax, cr0         ; Copy the contents of CR0 into EAX
+        or      eax, 1           ; Set bit 0     (0xFE = Real Mode)
+        mov     cr0, eax         ; Copy the contents of EAX into CR0
         
-        jmp 08h:kernel_segments ; Jump to code segment, offset kernel_segments
+        jmp     08h:kernel32    ; Jump to code segment, offset kernel32
         
 [BITS 32]                       ; We now need 32-bit instructions
-kernel_segments:
-        mov ax, 10h             ; Save data segment identifyer
-        mov ds, ax              ; Move a valid data segment into the data segment register
-        mov ss, ax              ; Move a valid data segment into the stack segment register
-        mov esp, 090000h        ; Move the stack pointer to 090000h
+kernel32:
+        mov     ax, 10h         ; Save data segment identifyer
+        mov     ds, ax          ; Move a valid data segment into the data segment register
+        mov     ss, ax          ; Move a valid data segment into the stack segment register
+        mov     esp, 090000h    ; Move the stack pointer to 090000h
         
-        jmp 08h:0x1000          ; Jump to section 08h (code), offset 01000h
+        jmp     08h:0x1000      ; Jump to section 08h (code), offset 01000h
         
 ;----------Global Descriptor Table----------;
 
