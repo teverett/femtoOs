@@ -3,11 +3,12 @@ set -e
 
 IMAGE=femtoos.img
 TMP=/tmp/femtoos
+IMAGESIZE=2880
 
 rm -f $IMAGE
 make clean
 make
-dd bs=512 count=28800 of=$IMAGE if=/dev/zero
+dd bs=512 count=$IMAGESIZE of=$IMAGE if=/dev/zero
 mdconfig -a -t vnode -f $IMAGE -u 0
 gpart create -s MBR  /dev/md0
 gpart add -t fat32 -b 512k /dev/md0
