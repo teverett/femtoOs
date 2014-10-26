@@ -1,9 +1,7 @@
 
-image: src/floppy.img
-src/floppy.img:
-	make -C src
-	cp src/floppy.img .	
+image: src/kernel/kernel.elf
+src/kernel/kernel.elf:
+	make -C src	
 clean:
 	make -C src clean
-	rm -rf floppy.img
 
