@@ -36,7 +36,7 @@ cp src/grub/* $TMP/boot/grub/
 #
 # make .iso file
 #
-#mkisofs -v -R -J -iso-level 3 -o $ISO $TMP
+#mkisofs -r -l -J  -o $ISO $TMP
 
 #
 # unmount 
