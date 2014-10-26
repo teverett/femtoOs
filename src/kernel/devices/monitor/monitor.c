@@ -217,7 +217,7 @@ void monitor_write_dec(u32int n)
 
 void init_monitor()
 {
-    cursor_y =10;
+    cursor_y =0;
   //  outb(0x3D4, 15); 
   //  u16int loc = inw(0x3D5);
   //  monitor_write_hex(loc);
