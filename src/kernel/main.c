@@ -6,10 +6,11 @@
 #include "devices/timer/timer.h"
 #include "devices/keyboard/keyboard.h"
 #include "devices/rtc/rtc.h"
+#include "multiboot.h"
 
-void init ( void );
+void init (void);
 
-void main( void )
+void main(struct multiboot *mboot_ptr)
 {
 	init_monitor();
 	monitor_write( "Starting FemtoOs\n");
@@ -18,7 +19,7 @@ void main( void )
 	for(;;); /* Keep the OS running */
 }
 
-void init( void )
+void init(void)
 {
 	monitor_write("Init GDT\n");
 	init_gdt();
@@ -34,4 +35,3 @@ void init( void )
 
 	monitor_write("Init Completed\n");	
 }
-
