@@ -4,7 +4,7 @@
 #ifndef PAGING_H
 #define PAGING_H
 
-#include "types.h"
+#include "common.h"
 #include "isr.h"
 
 typedef struct page
@@ -72,10 +72,8 @@ void page_fault(registers_t *regs);
 **/
 page_directory_t *clone_directory(page_directory_t *src);
 
-// Function to allocate a frame.
 void alloc_frame(page_t *page, int is_kernel, int is_writeable);
 
-// Function to deallocate a frame.
 void free_frame(page_t *page);
 
 #endif

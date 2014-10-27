@@ -3,25 +3,29 @@
 //          Part of this code is modified from Bran's kernel development tutorials.
 //          Rewritten for JamesM's kernel development tutorials.
 //
+#ifndef ISR_H
+#define ISR_H
 
-#include "types.h"
 
-#define IRQ0 32		// timer
-#define IRQ1 33		// keyboard
-#define IRQ2 34		// cascade
-#define IRQ3 35		// serial 2
-#define IRQ4 36		// serial 1
-#define IRQ5 37		// parallel 2
-#define IRQ6 38		// diskette
-#define IRQ7 39		// parallel 1
-#define IRQ8 40		// RTC
-#define IRQ9 41		// 
-#define IRQ10 42	// reserved
-#define IRQ11 43	// reserved
-#define IRQ12 44	// reserved
-#define IRQ13 45	// FPU
-#define IRQ14 46	// hard disk
-#define IRQ15 47	// reserved
+#include "common.h"
+
+// A few defines to make life a little easier
+#define IRQ0 32
+#define IRQ1 33
+#define IRQ2 34
+#define IRQ3 35
+#define IRQ4 36
+#define IRQ5 37
+#define IRQ6 38
+#define IRQ7 39
+#define IRQ8 40
+#define IRQ9 41
+#define IRQ10 42
+#define IRQ11 43
+#define IRQ12 44
+#define IRQ13 45
+#define IRQ14 46
+#define IRQ15 47
 
 typedef struct registers
 {
@@ -36,3 +40,5 @@ typedef struct registers
 // first parameter.
 typedef void (*isr_t)(registers_t*);
 void register_interrupt_handler(u8int n, isr_t handler);
+
+#endif

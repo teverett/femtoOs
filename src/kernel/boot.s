@@ -1,4 +1,3 @@
-
 ;
 ; boot.s -- Kernel start location. Also defines multiboot header.
 ;           Based on Bran's kernel development tutorial file start.asm
@@ -37,7 +36,8 @@ mboot:
 
 start:
     ; Load multiboot information:
-    push    ebx
+    push esp
+    push ebx
 
     ; Execute the kernel:
     cli                         ; Disable interrupts.
@@ -45,4 +45,3 @@ start:
     jmp $                       ; Enter an infinite loop, to stop the processor
                                 ; executing whatever rubbish is in the memory
                                 ; after our kernel!
-

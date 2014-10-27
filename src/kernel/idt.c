@@ -1,29 +1,12 @@
 
 #include "idt.h"
-#include "mem.h"
-#include "io.h"
 
-extern void idt_flush(u32int);
-
-idt_entry_t idt_entries[256];
-idt_ptr_t   idt_ptr;
-
-void idt_set_gate(u8int num, u32int base, u16int sel, u8int flags)
-{
-    idt_entries[num].base_lo = base & 0xFFFF;
-    idt_entries[num].base_hi = (base >> 16) & 0xFFFF;
-
-    idt_entries[num].sel     = sel;
-    idt_entries[num].always0 = 0;
-    idt_entries[num].flags   = flags  | 0x60;
-}
-
-void init_idt()
+static void init_idt()
 {
     idt_ptr.limit = sizeof(idt_entry_t) * 256 -1;
     idt_ptr.base  = (u32int)&idt_entries;
 
-    memset((u8int *)&idt_entries, 0, sizeof(idt_entry_t)*256);
+    memset(&idt_entries, 0, sizeof(idt_entry_t)*256);
 
     // Remap the irq table.
     outb(0x20, 0x11);
@@ -90,4 +73,13 @@ void init_idt()
     idt_flush((u32int)&idt_ptr);
 }
 
+static void idt_set_gate(u8int num, u32int base, u16int sel, u8int flags)
+{
+    idt_entries[num].base_lo = base & 0xFFFF;
+    idt_entries[num].base_hi = (base >> 16) & 0xFFFF;
+
+    idt_entries[num].sel     = sel;
+    idt_entries[num].always0 = 0;
+    idt_entries[num].flags   = flags  | 0x60;
+}
 
