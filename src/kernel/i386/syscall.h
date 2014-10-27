@@ -4,7 +4,7 @@
 #ifndef SYSCALL_H
 #define SYSCALL_H
 
-#include "../types.h"
+#include "../lib/types.h"
 
 void initialise_syscalls();
 

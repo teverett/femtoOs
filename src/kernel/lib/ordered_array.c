@@ -3,7 +3,7 @@
 //                    Written for JamesM's kernel development tutorials.
 
 #include "ordered_array.h"
-#include "kheap.h"
+#include "../kheap.h"
 #include "assert.h"
 #include "mem.h"
 

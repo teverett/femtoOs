@@ -7,8 +7,8 @@
 #include "paging.h"
 #include "../kheap.h"
 #include "descriptor_tables.h"
-#include "../mem.h"
-#include "../types.h"
+#include "../lib/mem.h"
+#include "../lib/types.h"
 
 // The currently running task.
 volatile task_t *current_task;

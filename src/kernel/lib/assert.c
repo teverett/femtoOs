@@ -1,6 +1,6 @@
 
 #include "assert.h"
-#include "monitor.h"
+#include "../monitor.h"
 
 extern void panic(const char *message, const char *file, u32int line)
 {

@@ -7,7 +7,7 @@
 #define ISR_H
 
 
-#include "../types.h"
+#include "../lib/types.h"
 
 // A few defines to make life a little easier
 #define IRQ0 32

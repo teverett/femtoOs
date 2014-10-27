@@ -5,7 +5,7 @@
 
 #include "kheap.h"
 #include "i386/paging.h"
-#include "assert.h"
+#include "lib/assert.h"
 
 // end is defined in the linker script.
 extern u32int end;
