@@ -4,6 +4,7 @@
 #include "syscall.h"
 #include "isr.h"
 #include "../monitor.h"
+#include "../lib/debug.h"
 
 static void syscall_handler(registers_t *regs);
 
@@ -21,6 +22,8 @@ u32int num_syscalls = 3;
 
 void initialise_syscalls()
 {
+    debug("initialise_syscalls()\n");
+
     // Register our syscall handler.
     register_interrupt_handler (0x80, &syscall_handler);
 }

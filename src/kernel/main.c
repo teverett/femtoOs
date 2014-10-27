@@ -10,20 +10,23 @@
 #include "initrd.h"
 #include "i386/task.h"
 #include "i386/syscall.h"
+#include "lib/debug.h"
 
 //extern u32int placement_address;
 u32int initial_esp;
 
 int main(struct multiboot *mboot_ptr, u32int initial_stack)
 {
+    // Initialise the screen (by clearing it)
+    monitor_clear();
+
     monitor_write("FemtoOs Kernel starting\n");
 
-  //  initial_esp = initial_stack;
+    initial_esp = initial_stack;
+    
     // Initialise all the ISRs and segmentation
-  //  init_descriptor_tables();
-    // Initialise the screen (by clearing it)
-  //  monitor_clear();
-
+    init_descriptor_tables();
+  
     // Initialise the PIT to 100Hz
 //    asm volatile("sti");
 //    init_timer(50);
@@ -36,15 +39,15 @@ int main(struct multiboot *mboot_ptr, u32int initial_stack)
   //  placement_address = initrd_end;
 
     // Start paging.
-//    initialise_paging();
+    initialise_paging();
 
     // Start multitasking.
-  //  initialise_tasking();
+    initialise_tasking();
 
     // Initialise the initial ramdisk, and set it as the filesystem root.
   //  fs_root = initialise_initrd(initrd_location);
 
- //   initialise_syscalls();
+    initialise_syscalls();
 
  //   switch_to_user_mode();
 

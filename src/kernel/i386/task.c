@@ -9,6 +9,7 @@
 #include "descriptor_tables.h"
 #include "../lib/mem.h"
 #include "../lib/types.h"
+#include "../lib/debug.h"
 
 // The currently running task.
 volatile task_t *current_task;
@@ -28,6 +29,8 @@ u32int next_pid = 1;
 
 void initialise_tasking()
 {
+    debug("initialise_tasking()\n");
+
     // Rather important stuff happening, no interrupts please!
     asm volatile("cli");
 

@@ -6,6 +6,7 @@
 #include "../monitor.h"
 #include "../lib/assert.h"
 #include "../lib/mem.h"
+#include "../lib/debug.h"
 
 extern void copy_page_physical(int source, int dest);
 
@@ -115,6 +116,8 @@ void free_frame(page_t *page)
 
 void initialise_paging()
 {
+    debug("initialise_paging()\n");
+
     // The size of physical memory. For the moment we 
     // assume it is 16MB big.
     u32int mem_end_page = 0x1000000;
