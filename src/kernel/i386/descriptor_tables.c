@@ -5,7 +5,7 @@
 //                       Rewritten for JamesM's kernel development tutorials.
 //
 
-#include "mem.h"
+#include "../mem.h"
 #include "descriptor_tables.h"
 #include "isr.h"
 #include "io.h"

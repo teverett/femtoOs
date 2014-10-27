@@ -2,10 +2,10 @@
 //            Written for JamesM's kernel development tutorials.
 
 #include "timer.h"
-#include "isr.h"
+#include "i386/isr.h"
 #include "monitor.h"
-#include "task.h"
-#include "io.h"
+#include "i386/task.h"
+#include "i386/io.h"
 
 u32int tick = 0;
 

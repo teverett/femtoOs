@@ -3,8 +3,7 @@
 
 #include "syscall.h"
 #include "isr.h"
-
-#include "monitor.h"
+#include "../monitor.h"
 
 static void syscall_handler(registers_t *regs);
 

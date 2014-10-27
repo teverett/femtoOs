@@ -2,14 +2,14 @@
 //           Made for JamesM's tutorials <www.jamesmolloy.co.uk>
 
 #include "monitor.h"
-#include "descriptor_tables.h"
+#include "i386/descriptor_tables.h"
 #include "timer.h"
-#include "paging.h"
-#include "multiboot.h"
+#include "i386/paging.h"
+#include "i386/multiboot.h"
 #include "fs.h"
 #include "initrd.h"
-#include "task.h"
-#include "syscall.h"
+#include "i386/task.h"
+#include "i386/syscall.h"
 
 //extern u32int placement_address;
 u32int initial_esp;

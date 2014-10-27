@@ -8,7 +8,7 @@
 #ifndef DESCRIPTOR_TABLES_H
 #define DESCRIPTOR_TABLES_H
 
-#include "types.h"
+#include "../types.h"
 
 // Initialisation function is publicly accessible.
 void init_descriptor_tables();

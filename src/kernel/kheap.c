@@ -4,7 +4,7 @@
 //            Written for JamesM's kernel development tutorials.
 
 #include "kheap.h"
-#include "paging.h"
+#include "i386/paging.h"
 #include "assert.h"
 
 // end is defined in the linker script.

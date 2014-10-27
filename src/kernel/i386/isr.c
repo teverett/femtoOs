@@ -6,7 +6,7 @@
 
 #include "io.h"
 #include "isr.h"
-#include "monitor.h"
+#include "../monitor.h"
 
 isr_t interrupt_handlers[256];
 

@@ -2,10 +2,10 @@
 //             Written for JamesM's kernel development tutorials.
 
 #include "paging.h"
-#include "kheap.h"
-#include "monitor.h"
-#include "assert.h"
-#include "mem.h"
+#include "../kheap.h"
+#include "../monitor.h"
+#include "../assert.h"
+#include "../mem.h"
 
 extern void copy_page_physical(int source, int dest);
 
