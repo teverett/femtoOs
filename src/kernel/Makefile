@@ -5,7 +5,7 @@ LD=ld
 LDARGS=-melf_i386_fbsd -Tlink.ld
 
 # note that boot.o must be first
-OBJS=boot.o main.o monitor.o gdt.o common.o interrupt.o process.o isr.o timer.o kheap.o paging.o ordered_array.o task.o syscall.o descriptor_tables.o 
+OBJS=boot.o main.o monitor.o gdt.o string.o interrupt.o process.o isr.o timer.o kheap.o paging.o ordered_array.o task.o syscall.o descriptor_tables.o assert.o io.o mem.o
 
 .SUFFIXES   : .c .s
 .c.o        :

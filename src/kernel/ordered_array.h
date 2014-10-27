@@ -5,7 +5,7 @@
 #ifndef ORDERED_ARRAY_H
 #define ORDERED_ARRAY_H
 
-#include "common.h"
+#include "types.h"
 
 /**
    This array is insertion sorted - it always remains in a sorted state (between calls).

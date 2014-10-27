@@ -4,7 +4,7 @@
 //          Rewritten for JamesM's kernel development tutorials.
 //
 
-#include "common.h"
+#include "io.h"
 #include "isr.h"
 #include "monitor.h"
 

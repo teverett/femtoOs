@@ -4,6 +4,8 @@
 
 #include "ordered_array.h"
 #include "kheap.h"
+#include "assert.h"
+#include "mem.h"
 
 s8int standard_lessthan_predicate(type_t a, type_t b)
 {

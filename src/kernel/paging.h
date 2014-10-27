@@ -4,7 +4,6 @@
 #ifndef PAGING_H
 #define PAGING_H
 
-#include "common.h"
 #include "isr.h"
 
 typedef struct page
