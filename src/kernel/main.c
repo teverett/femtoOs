@@ -12,7 +12,6 @@
 #include "i386/syscall.h"
 #include "lib/debug.h"
 
-//extern u32int placement_address;
 u32int initial_esp;
 
 int main(struct multiboot *mboot_ptr, u32int initial_stack)
@@ -31,25 +30,17 @@ int main(struct multiboot *mboot_ptr, u32int initial_stack)
 //    asm volatile("sti");
 //    init_timer(50);
 
-    // Find the location of our initial ramdisk.
- //   ASSERT(mboot_ptr->mods_count > 0);
- //   u32int initrd_location = *((u32int*)mboot_ptr->mods_addr);
- //   u32int initrd_end = *(u32int*)(mboot_ptr->mods_addr+4);
-    // Don't trample our module with placement accesses, please!
-  //  placement_address = initrd_end;
-
     // Start paging.
     initialise_paging();
 
     // Start multitasking.
     initialise_tasking();
 
-    // Initialise the initial ramdisk, and set it as the filesystem root.
-  //  fs_root = initialise_initrd(initrd_location);
-
+    // set up syscalls
     initialise_syscalls();
 
- //   switch_to_user_mode();
+    monitor_write("Switching to user mode\n");
+    switch_to_user_mode();
 
   //  syscall_monitor_write("Hello, user world!\n");
 
