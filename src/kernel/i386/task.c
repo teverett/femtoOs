@@ -29,7 +29,7 @@ u32int next_pid = 1;
 
 void initialise_tasking()
 {
-    debug("initialise_tasking()\n");
+    debug("initialise_tasking()");
 
     // Rather important stuff happening, no interrupts please!
     asm volatile("cli");

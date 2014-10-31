@@ -11,6 +11,7 @@
 #include "i386/task.h"
 #include "i386/syscall.h"
 #include "lib/debug.h"
+#include "i386/gpf.h"
 
 u32int initial_esp;
 
@@ -26,6 +27,9 @@ int main(struct multiboot *mboot_ptr, u32int initial_stack)
     // Initialise all the ISRs and segmentation
     init_descriptor_tables();
   
+    // install gpf handler
+    initialise_gpf_handler();
+
     // Initialise the PIT to 100Hz
 //    asm volatile("sti");
 //    init_timer(50);
@@ -39,7 +43,7 @@ int main(struct multiboot *mboot_ptr, u32int initial_stack)
     // set up syscalls
     initialise_syscalls();
 
-    monitor_write("Switching to user mode\n");
+    debug("Switching to user mode");
     switch_to_user_mode();
 
   //  syscall_monitor_write("Hello, user world!\n");

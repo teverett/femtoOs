@@ -27,6 +27,10 @@
 #define IRQ14 46
 #define IRQ15 47
 
+#define INT0D 0X0D	// gpf
+#define INT0E 0X0E	// page
+#define INT80 0x80	// syscall
+
 typedef struct registers
 {
     u32int ds;                  // Data segment selector

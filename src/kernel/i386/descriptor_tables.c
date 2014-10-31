@@ -36,7 +36,7 @@ extern isr_t interrupt_handlers[];
 // initialises the GDT and IDT.
 void init_descriptor_tables()
 {
-    debug("init_descriptor_tables()\n");
+    debug("init_descriptor_tables()");
     // Initialise the global descriptor table.
     init_gdt();
     // Initialise the interrupt descriptor table.

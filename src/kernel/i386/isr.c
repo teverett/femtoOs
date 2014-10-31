@@ -7,11 +7,13 @@
 #include "io.h"
 #include "isr.h"
 #include "../monitor.h"
+#include "../lib/debug.h"
 
 isr_t interrupt_handlers[256];
 
 void register_interrupt_handler(u8int n, isr_t handler)
-{
+{   
+    debugi("Registered interrupt handler interrupt", n);
     interrupt_handlers[n] = handler;
 }
 
@@ -29,9 +31,7 @@ void isr_handler(registers_t regs)
     }
     else
     {
-        monitor_write("unhandled interrupt: ");
-        monitor_write_hex(int_no);
-        monitor_put('\n');
+        debugi("unhandled interrupt", int_no);
         for(;;);
     }
 }
