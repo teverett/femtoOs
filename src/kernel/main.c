@@ -23,16 +23,22 @@ int main(struct multiboot *mboot_ptr, u32int initial_stack)
     monitor_write("FemtoOs Kernel starting\n");
 
     initial_esp = initial_stack;
-    
+
     // Initialise all the ISRs and segmentation
     init_descriptor_tables();
-  
+
+    // enable interrupts
+    asm volatile("sti");
+
     // install gpf handler
     initialise_gpf_handler();
 
-    // Initialise the PIT to 100Hz
-//    asm volatile("sti");
-//    init_timer(50);
+    // Initialise the PIT
+
+ //   init_timer();
+
+    debugi("Initial ESP",initial_esp );
+
 
     // Start paging.
     initialise_paging();
@@ -50,3 +56,4 @@ int main(struct multiboot *mboot_ptr, u32int initial_stack)
 
     return 0;
 }
+

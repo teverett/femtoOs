@@ -6,6 +6,7 @@
 static void gpf_callback(registers_t *regs)
 {
 	debug("gpf");
+	for(;;);
 }
 
 void initialise_gpf_handler(){

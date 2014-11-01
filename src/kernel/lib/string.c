@@ -37,6 +37,7 @@ char *strcpy(char *dest, const char *src)
 
 // Concatenate the NULL-terminated string src onto
 // the end of dest, and return dest.
+#pragma clang diagnostic ignored "-Wunsequenced"
 char *strcat(char *dest, const char *src)
 {
     while (*dest != 0)

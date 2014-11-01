@@ -22,5 +22,4 @@ void _debugi(const char* message, u32int n, const char* file, u32int line){
 	monitor_write(":");
 	monitor_write_dec(line);
 	monitor_write("\n");
-
 }

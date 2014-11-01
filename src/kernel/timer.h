@@ -6,6 +6,6 @@
 
 #include "lib/types.h"
 
-void init_timer(u32int frequency);
+void init_timer();
 
 #endif
