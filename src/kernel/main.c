@@ -27,7 +27,7 @@ int main(struct multiboot *mboot_ptr, u32int initial_stack)
     // Initialise all the ISRs and segmentation
     init_descriptor_tables();
 
-    // enable interrupts
+    // enable interrupts    
     asm volatile("sti");
 
     // install gpf handler
@@ -35,7 +35,7 @@ int main(struct multiboot *mboot_ptr, u32int initial_stack)
 
     // Initialise the PIT
 
- //   init_timer();
+    init_timer();
 
     debugi("Initial ESP",initial_esp );
 
@@ -51,6 +51,8 @@ int main(struct multiboot *mboot_ptr, u32int initial_stack)
 
     debug("Switching to user mode");
     switch_to_user_mode();
+
+   for(;;){}
 
   //  syscall_monitor_write("Hello, user world!\n");
 

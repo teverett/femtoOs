@@ -6,6 +6,7 @@
 #include "monitor.h"
 #include "i386/task.h"
 #include "i386/io.h"
+#include "lib/debug.h"
 
 u32int tick = 0;
 #define freq 50
@@ -13,11 +14,13 @@ u32int tick = 0;
 static void timer_callback(registers_t *regs)
 {
     tick++;
-    task_switch();
+//    task_switch();
 }
 
 void init_timer()
 {
+    debug("init_timer()");
+
     // Firstly, register our timer callback.
     register_interrupt_handler(IRQ0, &timer_callback);
 
