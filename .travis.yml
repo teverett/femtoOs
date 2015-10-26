@@ -1,0 +1,9 @@
+language: c
+script: make clean;make
+before_install:
+  - if [ "$TRAVIS_OS_NAME" = "linux" ];
+    then
+      sudo apt-get update -qq;
+      sudo apt-get -y install nasm;
+    fi
+
