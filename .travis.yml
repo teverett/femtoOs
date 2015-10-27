@@ -3,6 +3,6 @@ sudo: false
 script: make clean;make
 addons:
   apt:
-    sources:
+    packages:
     - nasm
 
